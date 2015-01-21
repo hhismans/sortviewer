@@ -6,7 +6,7 @@
 /*   By: hhismans <hhismans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/01 17:43:11 by hhismans          #+#    #+#             */
-/*   Updated: 2015/01/21 05:43:35 by hhismans         ###   ########.fr       */
+/*   Updated: 2015/01/21 05:52:54 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,18 +73,19 @@ void	*upscale_img(t_env *e,void *img,  int prevW, int prevH, int postW, int post
 	double j2;
 	t_img ret;
 
-	i2 = (double)(postW) / (double)(prevW);
-	j2 = (double)(postH) / (double)(prevH);
+	i2 = 1 / ((double)(postW) / (double)(prevW));
+	j2 = 1 / ((double)(postH) / (double)(prevH));
 	ret.img = mlx_new_image(e->mlx, postW, postH);
-	i = 1;
+	ret.data = mlx_get_data_addr(ret.img, &(ret.bbp), &(ret.sizeline), &(ret.endian));
+
+	i = 0;
 	while (i < postW)
 	{
-		j = 1;
+		j = 0;
 		while (j < postH)
 		{
 			//usleep(100000);	
-			//mlx_pixel_put_img(&ret, i, j,get_pixel_color(img, i * i2, j * j2));
-			mlx_pixel_put(e->mlx, e->win, i, j, get_pixel_color(img, i * i2, j * j2));
+			mlx_pixel_put_img(&ret, i, j,get_pixel_color(img, i * i2, j * j2));
 			//usleep(1000);
 			j++;
 		}
@@ -288,7 +289,7 @@ t_env	*set_mlx(void)
 	e->logo.img = mlx_xpm_file_to_image(e->mlx, "./xpm/logo.xpm",
 			&(e->logo_width), &(e->logo_height));
 	mlx_put_image_to_window(e->mlx, e->win, e->logo.img, 0,0);
-	void *imgtest = upscale_img(e,e->logo.img, e->logo_width, e->logo_height, 500, 500);
+	void *imgtest = upscale_img(e,e->logo.img, e->logo_width, e->logo_height, 100, 100);
 	mlx_put_image_to_window(e->mlx, e->win, imgtest, 0,0);
 	e->img_sort.img = mlx_new_image(e->mlx, SORT_WIDTH, SORT_HEIGHT);
 	e->img_sort.data = mlx_get_data_addr(e->img_sort.img, &(e->img_sort.bbp),
