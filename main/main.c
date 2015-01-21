@@ -6,7 +6,7 @@
 /*   By: hhismans <hhismans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/01 17:43:11 by hhismans          #+#    #+#             */
-/*   Updated: 2015/01/21 01:54:29 by hhismans         ###   ########.fr       */
+/*   Updated: 2015/01/21 05:43:35 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,26 +48,50 @@ int		key_hook(int keycode, t_env *e)
 {
 }*/
 
-/*void	*upscale_img(void *img, int prevW, int prevH, int postW, int postH)
+int		get_pixel_color(void *img, int x, int y)
+{
+	int bbp;
+	int sizeline;
+	int endian;
+	char *data;
+	int ret;
+	data = mlx_get_data_addr(img, &bbp, &sizeline, &endian);
+	bbp /= 8;
+	
+	ret = data[x *bbp + y *sizeline] * 0x000001;
+	ret += data[x *bbp + y *sizeline + 1] * 0x000100;
+	ret += data[x *bbp + y *sizeline + 2] * 0x010000;
+	ft_putnbr(ret);
+	return (ret);
+}
+
+void	*upscale_img(t_env *e,void *img,  int prevW, int prevH, int postW, int postH)
 {
 	int i;
 	int j;
-	int bbp;
-	int size_line;
-	int endian;
-	char *data;
+	double i2;
+	double j2;
+	t_img ret;
 
-	data = mlx_get_data_addr(img, &bbp, &sizeline, &endian);
-	while (i < prevW)
+	i2 = (double)(postW) / (double)(prevW);
+	j2 = (double)(postH) / (double)(prevH);
+	ret.img = mlx_new_image(e->mlx, postW, postH);
+	i = 1;
+	while (i < postW)
 	{
-		j = 0;
-		while (j < size_line)
+		j = 1;
+		while (j < postH)
 		{
-			data[j] = 0;
+			//usleep(100000);	
+			//mlx_pixel_put_img(&ret, i, j,get_pixel_color(img, i * i2, j * j2));
+			mlx_pixel_put(e->mlx, e->win, i, j, get_pixel_color(img, i * i2, j * j2));
+			//usleep(1000);
 			j++;
 		}
+		i++;
 	}
-}*/
+	return (ret.img);
+}
 
 int		rand_a_b(int a, int b){
     return rand()%(b-a) +a;
@@ -264,6 +288,8 @@ t_env	*set_mlx(void)
 	e->logo.img = mlx_xpm_file_to_image(e->mlx, "./xpm/logo.xpm",
 			&(e->logo_width), &(e->logo_height));
 	mlx_put_image_to_window(e->mlx, e->win, e->logo.img, 0,0);
+	void *imgtest = upscale_img(e,e->logo.img, e->logo_width, e->logo_height, 500, 500);
+	mlx_put_image_to_window(e->mlx, e->win, imgtest, 0,0);
 	e->img_sort.img = mlx_new_image(e->mlx, SORT_WIDTH, SORT_HEIGHT);
 	e->img_sort.data = mlx_get_data_addr(e->img_sort.img, &(e->img_sort.bbp),
 			&(e->img_sort.sizeline), &(e->img_sort.endian));
@@ -278,7 +304,7 @@ int		main(void)
 
 	e = set_mlx();
 	set_tab(tab);
-	puttab(tab, 100);
+//	puttab(tab, 100);
 	mlx_put_tab(e, tab);
 	tab_bubble_sort(tab, 100, e);
 //	mlx_loop(e->mlx);
