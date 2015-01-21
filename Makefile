@@ -6,7 +6,7 @@
 #    By: hhismans <hhismans@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/12/30 17:20:17 by hhismans          #+#    #+#              #
-#    Updated: 2015/01/18 15:17:03 by hhismans         ###   ########.fr        #
+#    Updated: 2015/01/21 00:54:57 by hhismans         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ LIB =	-lft -L./libft\
 
 SRC =	main/main.c \
 		src/ft_drawline_img_c.c \
+		src/ft_drawline_img.c \
 		src/ft_drawline_img_c_2.c \
 		src/put_pixel_img.c \
 		src/rainbow_gen.c \

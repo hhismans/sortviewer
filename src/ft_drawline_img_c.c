@@ -6,7 +6,7 @@
 /*   By: hhismans <hhismans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/23 13:29:38 by hhismans          #+#    #+#             */
-/*   Updated: 2014/12/30 17:03:05 by hhismans         ###   ########.fr       */
+/*   Updated: 2015/01/21 01:52:37 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 #include "fdf.h"
 #include <unistd.h>
 #include <math.h>
+#include "sortviewer.h"
 
-void		case_horiz(void *img_ptr, t_point p1, t_point p2, t_color c)
+void		case_horiz(t_img *img, t_point p1, t_point p2, t_color c)
 {
 	int dx;
 	int dy;
@@ -31,7 +32,7 @@ void		case_horiz(void *img_ptr, t_point p1, t_point p2, t_color c)
 	dx = 2 * e;
 	while (p1.x <= p2.x)
 	{
-		mlx_pixel_put_img(img_ptr, p1.x, p1.y, rainbow_gen(c.color_begin));
+		mlx_pixel_put_img(img, p1.x, p1.y, rainbow_gen(c.color_begin));
 		e = e - dy;
 		if (e <= 0)
 		{
@@ -43,7 +44,7 @@ void		case_horiz(void *img_ptr, t_point p1, t_point p2, t_color c)
 	}
 }
 
-void		case_horizneg(void *img_ptr, t_point p1, t_point p2, t_color c)
+void		case_horizneg(t_img *img, t_point p1, t_point p2, t_color c)
 {
 	int dx;
 	int dy;
@@ -58,7 +59,7 @@ void		case_horizneg(void *img_ptr, t_point p1, t_point p2, t_color c)
 	dx = 2 * e;
 	while (p1.x <= p2.x)
 	{
-		mlx_pixel_put_img(img_ptr, p1.x, p1.y, rainbow_gen(c.color_begin));
+		mlx_pixel_put_img(img, p1.x, p1.y, rainbow_gen(c.color_begin));
 		e = e - dy;
 		if (e <= 0)
 		{
@@ -70,7 +71,7 @@ void		case_horizneg(void *img_ptr, t_point p1, t_point p2, t_color c)
 	}
 }
 
-void		case_verti(void *img_ptr, t_point p1, t_point p2, t_color c)
+void		case_verti(t_img *img, t_point p1, t_point p2, t_color c)
 {
 	int dx;
 	int dy;
@@ -85,7 +86,7 @@ void		case_verti(void *img_ptr, t_point p1, t_point p2, t_color c)
 	dy = 2 * e;
 	while (p1.y <= p2.y)
 	{
-		mlx_pixel_put_img(img_ptr, p1.x, p1.y, rainbow_gen(c.color_begin));
+		mlx_pixel_put_img(img, p1.x, p1.y, rainbow_gen(c.color_begin));
 		e = e - dx;
 		if (e <= 0)
 		{
@@ -97,7 +98,7 @@ void		case_verti(void *img_ptr, t_point p1, t_point p2, t_color c)
 	}
 }
 
-void		case_vertineg(void *img_ptr, t_point p1, t_point p2, t_color c)
+void		case_vertineg(t_img *img, t_point p1, t_point p2, t_color c)
 {
 	int dx;
 	int dy;
@@ -112,7 +113,7 @@ void		case_vertineg(void *img_ptr, t_point p1, t_point p2, t_color c)
 	dy = 2 * e;
 	while (p1.y >= p2.y)
 	{
-		mlx_pixel_put_img(img_ptr, p1.x, p1.y, rainbow_gen(c.color_begin));
+		mlx_pixel_put_img(img, p1.x, p1.y, rainbow_gen(c.color_begin));
 		e = e + dx;
 		if (e <= 0)
 		{
@@ -124,7 +125,7 @@ void		case_vertineg(void *img_ptr, t_point p1, t_point p2, t_color c)
 	}
 }
 
-void		ft_drawline_img_c(void *img_ptr, t_point p1, t_point p2, t_color c)
+void		ft_drawline_img_c(t_img *img, t_point p1, t_point p2, t_color c)
 {
 	int dx;
 	int dy;
@@ -134,20 +135,20 @@ void		ft_drawline_img_c(void *img_ptr, t_point p1, t_point p2, t_color c)
 		if (dx > 0)
 		{
 			if ((dy = p2.y - p1.y) != 0)
-				ft_drawline_img_c_1(img_ptr, p1, p2, c);
+				ft_drawline_img_c_1(img, p1, p2, c);
 			else
-				ft_drawline_img_c_2(img_ptr, p1, p2, c);
+				ft_drawline_img_c_2(img, p1, p2, c);
 		}
 		else
 		{
 			dx = c.color_begin;
 			c.color_begin = c.color_end;
 			c.color_end = dx;
-			ft_drawline_img_c(img_ptr, p2, p1, c);
+			ft_drawline_img_c(img, p2, p1, c);
 		}
 	}
 	else
 	{
-		ft_drawline_img_c_3(img_ptr, p1, p2, c);
+		ft_drawline_img_c_3(img, p1, p2, c);
 	}
 }

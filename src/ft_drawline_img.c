@@ -1,36 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_img.c                                         :+:      :+:    :+:   */
+/*   ft_drawline_img.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hhismans <hhismans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/24 13:48:33 by hhismans          #+#    #+#             */
-/*   Updated: 2015/01/21 01:55:08 by hhismans         ###   ########.fr       */
+/*   Created: 2015/01/21 00:50:35 by hhismans          #+#    #+#             */
+/*   Updated: 2015/01/21 00:58:15 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <unistd.h>
 #include "fdf.h"
-#include <mlx.h>
-#include "sortviewer.h"
 
-void	mlx_pixel_put_img(t_img *img, int x, int y, int color)
+void				ft_drawline_img(void *img_ptr, t_point p1, t_point p2, int color)
 {
-	int		i;
-	int bbp;
-
-	bbp = img->bbp / 8;
-	i = x * bbp + y * img->sizeline;
-	if (WIDTH * bbp + HEIGHT * img->sizeline < i)
-		return ;
-	if (x * bbp > img->sizeline)
-		return ;
-	if (x >= 0 && y >= 0)
+	while (p1.x <= p2.y)
 	{
-		img->data[i] = color;
-		img->data[i + 1] = color >> 8;
-		img->data[i + 2] = color >> 16;
+		mlx_pixel_put_img(img_ptr, p1.x, p1.y, color);
+		p1.y++;
 	}
 }

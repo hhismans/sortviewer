@@ -6,7 +6,7 @@
 /*   By: hhismans <hhismans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/01 20:50:12 by hhismans          #+#    #+#             */
-/*   Updated: 2014/12/01 21:02:27 by hhismans         ###   ########.fr       */
+/*   Updated: 2015/01/21 01:38:52 by hhismans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <unistd.h>
 #include <math.h>
 
-void	ft_drawline_img_c_1(void *img_ptr, t_point p1, t_point p2, t_color c)
+void	ft_drawline_img_c_1(t_img *img_ptr, t_point p1, t_point p2, t_color c)
 {
 	int dx;
 	int dy;
@@ -41,7 +41,7 @@ void	ft_drawline_img_c_1(void *img_ptr, t_point p1, t_point p2, t_color c)
 	}
 }
 
-void	ft_drawline_img_c_2(void *img_ptr, t_point p1, t_point p2, t_color c)
+void	ft_drawline_img_c_2(t_img *img_ptr, t_point p1, t_point p2, t_color c)
 {
 	int i_color;
 
@@ -69,7 +69,7 @@ void	ft_drawline_img_c_2(void *img_ptr, t_point p1, t_point p2, t_color c)
 	}
 }
 
-void	ft_drawline_img_c_3(void *img_ptr, t_point p1, t_point p2, t_color c)
+void	ft_drawline_img_c_3(t_img *img_ptr, t_point p1, t_point p2, t_color c)
 {
 	int i_color;
 
